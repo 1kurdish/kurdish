@@ -3,7 +3,7 @@ const client = new Discord.Client();
  
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-   client.user.setActivity("اكتب اي شي",{type: 'WATCHING'})
+   client.user.setActivity("M.r D E D O",{type: 'WATCHING'})
   console.log('')
   console.log('')
   console.log('╔[═════════════════════════════════════════════════════════════════]╗')
@@ -53,11 +53,11 @@ client.on('message', async msg => {
  
     if (command === `play`) {
         const voiceChannel = msg.member.voiceChannel;
-        if (!voiceChannel) return msg.channel.send('يجب توآجد حضرتك بروم صوتي .');
+        if (!voiceChannel) return msg.channel.send('ده‌بێت ئاماده‌ بیت له‌ ژوڕێک  .');
         const permissions = voiceChannel.permissionsFor(msg.client.user);
         if (!permissions.has('CONNECT')) {
            
-            return msg.channel.send('لا يتوآجد لدي صلاحية للتكلم بهذآ الروم');
+            return msg.channel.send('هیچ شتێکم له‌ ده‌ست نیه‌ ');
         }
         if (!permissions.has('SPEAK')) {
             return msg.channel.send('لا يتوآجد لدي صلاحية للتكلم بهذآ الروم');
@@ -75,7 +75,7 @@ client.on('message', async msg => {
                 const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
                 await handleVideo(video2, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
             }
-            return msg.channel.send(` **${playlist.title}** تم الإضآفة إلى قأئمة التشغيل`);
+            return msg.channel.send(` **${playlist.title}** ۆرانیه‌که‌ زیاد کرا به‌ سه‌رکه‌ووتیی`);
         } else {
             try {
  
@@ -85,7 +85,7 @@ client.on('message', async msg => {
                     var videos = await youtube.searchVideos(searchString, 5);
                     let index = 0;
                     const embed1 = new Discord.RichEmbed()
-                    .setDescription(`**الرجآء من حضرتك إختيآر رقم المقطع** :
+                    .setDescription(`**تکایه‌ ژماره‌یه‌ک هه‌ڵبژێره** :
 ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
  
                     .setFooter("By @! ๖ۣۜℜIP⇝ℳℜ_ℳⅅℳℛ👑#0590 ")
@@ -100,7 +100,7 @@ ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
                         });
                     } catch (err) {
                         console.error(err);
-                        return msg.channel.send('لم يتم إختيآر مقطع صوتي');
+                        return msg.channel.send('ژماری ده‌نگ هه‌ڵبژێره‌ ');
                     }
                     const videoIndex = parseInt(response.first().content);
                     var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
@@ -113,23 +113,23 @@ ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
             return handleVideo(video, msg, voiceChannel);
         }
     } else if (command === `skip`) {
-        if (!msg.member.voiceChannel) return msg.channel.send('أنت لست بروم صوتي .');
+        if (!msg.member.voiceChannel) return msg.channel.send('بۆ به‌ رزو نزمی ده‌نگ .');
         if (!serverQueue) return msg.channel.send('لا يتوفر مقطع لتجآوزه');
         serverQueue.connection.dispatcher.end('تم تجآوز هذآ المقطع');
         return undefined;
     } else if (command === `leave`) {
-        if (!msg.member.voiceChannel) return msg.channel.send('أنت لست بروم صوتي .');
+        if (!msg.member.voiceChannel) return msg.channel.send('بۆ به‌ رزو نزمی ده‌نگ .');
         if (!serverQueue) return msg.channel.send('لا يتوفر مقطع لإيقآفه');
         serverQueue.songs = [];
-        serverQueue.connection.dispatcher.end('تم إيقآف هذآ المقطع');
+        serverQueue.connection.dispatcher.end('ئه‌م به‌شه‌ وه‌ستا');
         return undefined;
     } else if (command === `vol`) {
         if (!msg.member.voiceChannel) return msg.channel.send('أنت لست بروم صوتي .');
-        if (!serverQueue) return msg.channel.send('لا يوجد شيء شغآل.');
+        if (!serverQueue) return msg.channel.send('هیچ کار ناکاتل.');
         if (!args[1]) return msg.channel.send(`:loud_sound: مستوى الصوت **${serverQueue.volume}**`);
         serverQueue.volume = args[1];
         serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 50);
-        return msg.channel.send(`:speaker: تم تغير الصوت الي **${args[1]}**`);
+        return msg.channel.send(`:speaker: ده‌نگ گۆڕا بۆ **${args[1]}**`);
     } else if (command === `np`) {
         if (!serverQueue) return msg.channel.send('لا يوجد شيء حالي ف العمل.');
         const embedNP = new Discord.RichEmbed()
@@ -150,14 +150,14 @@ ${serverQueue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}
         if (serverQueue && serverQueue.playing) {
             serverQueue.playing = false;
             serverQueue.connection.dispatcher.pause();
-            return msg.channel.send('تم إيقاف الموسيقى مؤقتا!');
+            return msg.channel.send('گۆرانیه‌که‌ وه‌ستا به‌ شێوه‌یه‌کی کاتی!');
         }
-        return msg.channel.send('لا يوجد شيء حالي ف العمل.');
+        return msg.channel.send('هیچ گۆرانیه‌ک نیه‌ .');
     } else if (command === "resume") {
         if (serverQueue && !serverQueue.playing) {
             serverQueue.playing = true;
             serverQueue.connection.dispatcher.resume();
-            return msg.channel.send('استأنفت الموسيقى بالنسبة لك !');
+            return msg.channel.send('اگۆرانیه‌که‌ کار ده‌کات ئێستا !');
         }
         return msg.channel.send('لا يوجد شيء حالي في العمل.');
     }
@@ -201,7 +201,7 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {
         serverQueue.songs.push(song);
         console.log(serverQueue.songs);
         if (playlist) return undefined;
-        else return msg.channel.send(` **${song.title}** تم اضافه الاغنية الي القائمة!`);
+        else return msg.channel.send(` **${song.title}** گۆرانیه‌که‌ زیاد کرا!`);
     }
     return undefined;
 }
@@ -226,7 +226,7 @@ function play(guild, song) {
         .on('error', error => console.error(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
  
-    serverQueue.textChannel.send(`بدء تشغيل : **${song.title}**`);
+    serverQueue.textChannel.send(`کار ده‌کات : **${song.title}**`);
 }
  
 const adminprefix = "$vip";
@@ -237,7 +237,7 @@ client.on('message', message => {
    
 if (message.content.startsWith(adminprefix + 'setgdame')) {
   client.user.setGame(argresult);
-    message.channel.sendMessage(`**${argresult} تم تغيير بلاينق البوت إلى **`)
+    message.channel.sendMessage(`**${argresult} گۆرانی گۆڕا بۆ  **`)
 } else
   if (message.content.startsWith(adminprefix + 'setname')) {
 client.user.setUsername(argresult).then
@@ -259,14 +259,14 @@ client.on("message", message => {
   const embed = new Discord.RichEmbed()
       .setColor("#000000")
       .setDescription(`
-${prefix}play ⇏ لتشغيل أغنية برآبط أو بأسم
-${prefix}skip ⇏ لتجآوز الأغنية الحآلية
-${prefix}stop ⇏ إيقآف الأغنية مؤقتا
-${prefix}resume ⇏ لموآصلة الإغنية بعد إيقآفهآ مؤقتا
-${prefix}vol ⇏ لتغيير درجة الصوت 100 - 0
-${prefix}leave⇏ لإخرآج البوت من الروم
-${prefix}np ⇏ لمعرفة الأغنية المشغلة حآليا
-${prefix}queue ⇏ لمعرفة قآئمة التشغيل
+${prefix}p ⇏ بۆ کار پێ کردنی گۆرانی
+${prefix}s ⇏ بۆ گۆڕینی گۆرانیه‌كه
+${prefix}stop ⇏ وه‌ستاندنی بۆ ماوه‌یه‌ کی که‌
+${prefix}resume ⇏ کارپێکردنی دوای وه‌ستاند
+${prefix}vol ⇏ بۆ به‌ رزو نزمی ده‌نگ 100 - 0
+${prefix}leave⇏ ده‌رکرنی بۆت له‌ میوسیک
+${prefix}np ⇏ بۆ بینینی کاتی گۆرانیه‌ که
+${prefix}queue ⇏ بینینی گۆرانی دواتر 
  `)
    message.channel.sendEmbed(embed)
    
